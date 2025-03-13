@@ -85,12 +85,12 @@ function fetchWeatherByCoords(lat, lon, areaName = "Your Location") {
             let currentWeather = `
                 <h2>${formattedLocation}</h2>
                 <img src="${weatherIcon}" alt="Weather Icon">
-                <p><b>Temperature:</b> ${weatherData.main.temp}°C</p>
-                <p><b>Humidity:</b> ${weatherData.main.humidity}%</p>
-                <p><b>Wind Speed:</b> ${weatherData.wind.speed} m/s</p>
-                <p><b>Weather:</b> ${weatherData.weather[0].description}</p>
-                <p><b>Sunrise:</b> ${sunriseTime}</p>
-                <p><b>Sunset:</b> ${sunsetTime}</p>
+                <p>🌡 <b>Temperature:</b> ${weatherData.main.temp}°C</p>
+                <p>💧 <b>Humidity:</b> ${weatherData.main.humidity}%</p>
+                <p>💨 <b>Wind Speed:</b> ${weatherData.wind.speed} m/s</p>
+                <p>☁️ <b>Weather Condition:</b> ${weatherData.weather[0].description}</p>
+                <p>🌅 <b>Sunrise:</b> ${sunriseTime}</p>
+                <p>🌇 <b>Sunset:</b> ${sunsetTime}</p>
             `;
 
             document.getElementById('weatherResult').innerHTML = currentWeather;
