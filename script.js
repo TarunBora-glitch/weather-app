@@ -1,6 +1,5 @@
-const API_KEY = '5dae7f999739062c07ce5897f8f02583'; // Replace with your OpenWeather API Key
+const API_KEY = '5dae7f999739062c07ce5897f8f02583'; 
 
-// Function to fetch weather by area name
 function getWeather() {
     let area = document.getElementById('cityInput').value.trim();
     if (area === '') {
@@ -10,7 +9,6 @@ function getWeather() {
     fetchWeatherData(area);
 }
 
-// Function to fetch weather using Geolocation
 function getWeatherByLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(position => {
@@ -44,7 +42,6 @@ function getWeatherByLocation() {
     }
 }
 
-// Fetch weather using city name
 function fetchWeatherData(area) {
     let geoUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${area}&limit=1&appid=${API_KEY}`;
 
@@ -67,7 +64,6 @@ function fetchWeatherData(area) {
         .catch(error => console.error("Error:", error));
 }
 
-// Fetch weather using latitude & longitude
 function fetchWeatherByCoords(lat, lon, areaName = "Your Location") {
     let weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
     let forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
@@ -80,7 +76,7 @@ function fetchWeatherByCoords(lat, lon, areaName = "Your Location") {
             let sunriseTime = new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString();
             let sunsetTime = new Date(weatherData.sys.sunset * 1000).toLocaleTimeString();
 
-            let weatherIcon = `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`; // Weather icon
+            let weatherIcon = `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`; 
 
             let currentWeather = `
                 <h2>${formattedLocation}</h2>
@@ -115,7 +111,7 @@ function fetchWeatherByCoords(lat, lon, areaName = "Your Location") {
             });
 
             Object.values(dailyForecasts).forEach(day => {
-                let dayIcon = `https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`; // Forecast icon
+                let dayIcon = `https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`; 
                 forecastHtml += `
                     <div class="forecast-item">
                         <p><b>${day.dt_txt.split(" ")[0]}</b></p>
