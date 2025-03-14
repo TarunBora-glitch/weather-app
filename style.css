@@ -18,8 +18,9 @@ input {
   padding: 12px;
   font-size: 1rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   margin-bottom: 15px;
+  outline: none; 
 }
 
 button {
@@ -56,9 +57,9 @@ button:hover {
 
 .forecast-item {
   background: rgba(255, 255, 255, 0.2);
-  padding: 15px;
+  padding: 14px;
   border-radius: 8px;
-  width: 150px;
+  width: 140px;
   text-align: center;
   box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.2);
 }
@@ -73,7 +74,61 @@ button:hover {
   }
 
   .forecast-container {
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
+  }
+}
+@media (max-width: 425px) {
+  body {
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  input {
+    width: 90%;
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+
+  button {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+  }
+
+  #weatherResult {
+    padding: 15px;
+  }
+
+  .forecast-container {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .forecast-item {
+    width: 120px;
+    padding: 12px;
+  }
+}
+@media (max-width: 320px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  input {
+    width: 95%;
+    font-size: 0.85rem;
+  }
+
+  button {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+
+  .forecast-item {
+    width: 100px;
+    padding: 10px;
   }
 }
