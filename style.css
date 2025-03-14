@@ -121,7 +121,7 @@ button:hover {
   }
 }
 
-@media (max-width: 376px) {
+@media (max-width: 375px) {
   body {
     padding: 15px;
   }
