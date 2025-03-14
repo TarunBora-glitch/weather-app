@@ -73,20 +73,14 @@ function fetchWeatherByCoords(lat, lon, areaName = "Your Location") {
         .then(weatherData => {
             let formattedLocation = `${areaName}`.replace(/, (\w+), \1$/, ", $1"); 
 
-            let sunriseTime = new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString();
-            let sunsetTime = new Date(weatherData.sys.sunset * 1000).toLocaleTimeString();
-
-            let weatherIcon = `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`; 
-
             let currentWeather = `
                 <h2>${formattedLocation}</h2>
-                <img src="${weatherIcon}" alt="Weather Icon">
                 <p>🌡 <b>Temperature:</b> ${weatherData.main.temp}°C</p>
                 <p>💧 <b>Humidity:</b> ${weatherData.main.humidity}%</p>
-                <p>💨 <b>Wind Speed:</b> ${weatherData.wind.speed} m/s</p>
-                <p>☁️ <b>Weather Condition:</b> ${weatherData.weather[0].description}</p>
-                <p>🌅 <b>Sunrise:</b> ${sunriseTime}</p>
-                <p>🌇 <b>Sunset:</b> ${sunsetTime}</p>
+                <p>🌬 <b>Wind Speed:</b> ${weatherData.wind.speed} m/s</p>
+                <p>☁️ <b>Weather:</b> ${weatherData.weather[0].description}</p>
+                <p>🌅 <b>Sunrise:</b> ${new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString()}</p>
+                <p>🌇 <b>Sunset:</b> ${new Date(weatherData.sys.sunset * 1000).toLocaleTimeString()}</p>
             `;
 
             document.getElementById('weatherResult').innerHTML = currentWeather;
@@ -95,29 +89,29 @@ function fetchWeatherByCoords(lat, lon, areaName = "Your Location") {
     fetch(forecastUrl)
         .then(response => response.json())
         .then(forecastData => {
-            if (!forecastData.list || forecastData.list.length === 0) {
-                document.getElementById('forecastResult').innerHTML = `<p>Forecast data not available.</p>`;
-                return;
-            }
-
             let forecastHtml = "<h3>5-Day Forecast:</h3><div class='forecast-container'>";
-            
-            let dailyForecasts = {};
+
+            let dailyForecasts = {}; 
+
             forecastData.list.forEach(entry => {
-                let date = entry.dt_txt.split(" ")[0];
+                let date = entry.dt_txt.split(" ")[0]; 
+                let temp = entry.main.temp; 
+
                 if (!dailyForecasts[date]) {
-                    dailyForecasts[date] = entry;
+                    dailyForecasts[date] = { min: temp, max: temp, icon: entry.weather[0].icon, description: entry.weather[0].description };
+                } else {
+                    dailyForecasts[date].min = Math.min(dailyForecasts[date].min, temp);
+                    dailyForecasts[date].max = Math.max(dailyForecasts[date].max, temp);
                 }
             });
 
-            Object.values(dailyForecasts).forEach(day => {
-                let dayIcon = `https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`; 
+            Object.entries(dailyForecasts).forEach(([date, data]) => {
                 forecastHtml += `
                     <div class="forecast-item">
-                        <p><b>${day.dt_txt.split(" ")[0]}</b></p>
-                        <img src="${dayIcon}" alt="Weather Icon">
-                        <p>🌡 ${day.main.temp}°C</p>
-                        <p>☁️ ${day.weather[0].description}</p>
+                        <p><b>${date}</b></p>
+                        <img src="https://openweathermap.org/img/wn/${data.icon}.png" alt="${data.description}" />
+                        <p>🌡 <b>${data.min}°C</b> - <b>${data.max}°C</b></p>
+                        <p>☁️ ${data.description}</p>
                     </div>
                 `;
             });
@@ -125,8 +119,6 @@ function fetchWeatherByCoords(lat, lon, areaName = "Your Location") {
             forecastHtml += "</div>";
             document.getElementById('forecastResult').innerHTML = forecastHtml;
         })
-        .catch(error => {
-            console.error("Error:", error);
-            document.getElementById('forecastResult').innerHTML = "";
-        });
+        .catch(error => console.error("Error:", error));
 }
+
