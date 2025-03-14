@@ -111,6 +111,10 @@ button:hover {
     gap: 10px;
   }
 
+  .forecast-container p{
+    font-size:12.7px ;
+  }
+
   .forecast-item {
     width: 120px;
     padding: 12px;
@@ -146,9 +150,11 @@ button:hover {
     flex-wrap: wrap;
     gap: 10px;
   }
+
   .forecast-container p{
     font-size:12.7px ;
   }
+
   .forecast-item {
     width: 120px;
     padding: 12px;
